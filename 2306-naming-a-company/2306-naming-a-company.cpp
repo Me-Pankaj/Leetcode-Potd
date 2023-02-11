@@ -1,19 +1,46 @@
 class Solution {
 public:
-    long long distinctNames(vector<string>& ideas) {
-        long long disName = 0;
-        vector<unordered_set<string>> arr(26);
-        for (string s : ideas) 
-            arr[s[0] - 'a'].insert(s.substr(1));
-        
-        for (int i = 0; i < 25; i++) {
-            for (int j = i + 1; j < 26; j++) {
-                unordered_set<string> set;
-                set.insert(arr[i].begin(), arr[i].end());
-                set.insert(arr[j].begin(), arr[j].end());
-                disName += (arr[i].size() - set.size()) * (arr[j].size() - set.size());
+    long long distinctNames(vector<string>& s) {
+        int n = s.size();
+        unordered_map<string,bool> mp;
+        for(auto x:s)
+        {
+            mp[x]=true;
+        }
+        vector<vector<long long >> dict(26,vector<long long> (26,0));
+        for(int i=0;i<n;i++)
+        {
+            string str=s[i].substr(1);
+            int in=s[i][0]-'a';
+            // cout<<in<<endl;
+            for(int j=0;j<26;j++){
+                char ch=j+'a';
+                string res=ch+str;
+                if(mp.count(res)==0){
+                    dict[in][j]+=1;
+                }
             }
         }
-        return disName * 2;
+        
+        
+        for(int i=0;i<26;i++)
+        {
+            for(int j=0;j<26;j++){
+                cout<<dict[i][j]<<" ";
+               
+            }
+             cout<<endl;
+        }
+        long long cnt=0;
+        for(int i=0;i<26;i++)
+        {
+            for(int j=0;j<26;j++){
+                if(dict[i][j]>0 and i!=j)
+                {
+                    cnt+=dict[i][j]*dict[j][i];
+                }
+            }
+        }
+        return cnt;
     }
 };
