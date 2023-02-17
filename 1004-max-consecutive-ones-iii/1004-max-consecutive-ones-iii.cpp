@@ -6,10 +6,8 @@ public:
         int j=0,ans=0;
         for(int i=0;i<n;i++)
         {
-            // if(a[i]==1) c++;
-       if(a[i]==0)
+            if(a[i]==0)
             {
-                // c++;
                 zero++;
             }
             if(zero>k)
